@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 
 
 class PWTest(unittest.TestCase):
@@ -40,29 +39,29 @@ class PWTest(unittest.TestCase):
         password_field.send_keys('password')
         log_in_button = driver.find_element_by_id('js_kit_signin__submit')
         log_in_button.click()
-        donate = driver.find_element_by_xpath("/html/body/div[3]/div/div[4]/a[1]")
+        donate = driver.find_element_by_xpath("/html/body/div[3]/div/div[5]/a[1]")
         donate.click()
         driver.switch_to.frame(driver.find_element_by_id('payment_iframe'))
         _wait = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='xform-bonus']")))
         select = Select(driver.find_element_by_xpath('//*[@id="xform-bonus"]'))
         select.select_by_value('5')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "66,90"))
         assert "66,90" == driver.find_element_by_id("xform-sum").get_attribute('value')
         select.select_by_value('10')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "133,80"))
         assert "133,80" == driver.find_element_by_id("xform-sum").get_attribute('value')
         select.select_by_value('20')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "267,60"))
         assert "267,60" == driver.find_element_by_id("xform-sum").get_attribute('value')
         select.select_by_value('50')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "669"))
         assert "669" == driver.find_element_by_id("xform-sum").get_attribute('value')
         select.select_by_value('100')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "1338"))
         assert "1338" == driver.find_element_by_id("xform-sum").get_attribute('value')
         select.select_by_value('300')
-        time.sleep(1)
+        _wait = WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element_value((By.ID, "xform-sum"), "4014"))
         assert "4014" == driver.find_element_by_id("xform-sum").get_attribute('value')
 
     def tearDown(self):
